@@ -640,9 +640,13 @@ const Contact = () => {
   };
 
   const handleChange = (e) => {
+    const fieldName = e.target.name === 'from_name' ? 'name' : 
+                      e.target.name === 'from_email' ? 'email' : 
+                      'message';
+    
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [fieldName]: e.target.value,
     });
   };
 
