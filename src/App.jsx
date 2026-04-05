@@ -624,8 +624,8 @@ const Contact = () => {
   };
 
   const contactInfo = [
-    { icon: Phone, text: '01917399263', label: 'Phone' },
-    { icon: Mail, text: 'mehedi@example.com', label: 'Email' },
+    { icon: Phone, text: '+880 01917399263', label: 'Phone' },
+    { icon: Mail, text: 'hassanmehedi379@gmail.com', label: 'Email' },
     { icon: MapPin, text: 'Bangladesh', label: 'Location' },
   ];
 
@@ -802,7 +802,7 @@ const Footer = () => {
               <UserRound size={20} className="md:w-6 md:h-6" />
             </motion.a>
             <motion.a
-              href="mailto:mehedi@example.com"
+              href="mailto:hassanmehedi379@gmail.com"
               className="text-gray-600 dark:text-gray-400 hover:text-blue-600 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               whileHover={{ scale: 1.2 }}
               aria-label="Email contact"
