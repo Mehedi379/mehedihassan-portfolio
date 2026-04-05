@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Moon, Sun, Mail, Phone, MapPin, 
@@ -21,6 +21,7 @@ import GamingAvatar from './components/GamingAvatar';
 import GamingSkillCard from './components/GamingSkillCard';
 import AutoTypingCode from './components/AutoTypingCode';
 import usePerformanceCheck from './hooks/usePerformanceCheck';
+import emailjs from '@emailjs/browser';
 
 // Animation variants
 const fadeInUp = {
@@ -609,11 +610,33 @@ const Contact = () => {
     message: '',
   });
   const [showToast, setShowToast] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const formRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setShowToast(true);
-    setFormData({ name: '', email: '', message: '' });
+    setIsSubmitting(true);
+
+    // EmailJS configuration - Replace with your actual credentials
+    const serviceID = 'YOUR_SERVICE_ID'; // Get from EmailJS dashboard
+    const templateID = 'YOUR_TEMPLATE_ID'; // Get from EmailJS dashboard
+    const publicKey = 'YOUR_PUBLIC_KEY'; // Get from EmailJS dashboard
+
+    emailjs
+      .sendForm(serviceID, templateID, formRef.current, publicKey)
+      .then(
+        (result) => {
+          console.log('Email sent successfully:', result.text);
+          setShowToast(true);
+          setFormData({ name: '', email: '', message: '' });
+          setIsSubmitting(false);
+        },
+        (error) => {
+          console.error('Failed to send email:', error.text);
+          alert('Failed to send message. Please try again or email me directly.');
+          setIsSubmitting(false);
+        }
+      );
   };
 
   const handleChange = (e) => {
@@ -695,7 +718,7 @@ const Contact = () => {
             </motion.div>
 
             <motion.div variants={fadeInUp}>
-              <form onSubmit={handleSubmit} className="bg-white dark:bg-darker p-5 sm:p-8 rounded-xl shadow-lg space-y-4 sm:space-y-6">
+              <form ref={formRef} onSubmit={handleSubmit} className="bg-white dark:bg-darker p-5 sm:p-8 rounded-xl shadow-lg space-y-4 sm:space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2">
                     Your Name
@@ -703,7 +726,7 @@ const Contact = () => {
                   <input
                     type="text"
                     id="name"
-                    name="name"
+                    name="from_name"
                     value={formData.name}
                     onChange={handleChange}
                     required
@@ -719,7 +742,7 @@ const Contact = () => {
                   <input
                     type="email"
                     id="email"
-                    name="email"
+                    name="from_email"
                     value={formData.email}
                     onChange={handleChange}
                     required
@@ -746,12 +769,24 @@ const Contact = () => {
 
                 <motion.button
                   type="submit"
-                  className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg transition-shadow"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={isSubmitting}
+                  className={`w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg transition-shadow ${
+                    isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+                  whileHover={!isSubmitting ? { scale: 1.02, y: -2 } : {}}
+                  whileTap={!isSubmitting ? { scale: 0.98 } : {}}
                 >
-                  <Send size={20} />
-                  Send Message
+                  {isSubmitting ? (
+                    <>
+                      <span className="animate-spin">⏳</span>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={20} />
+                      Send Message
+                    </>
+                  )}
                 </motion.button>
               </form>
             </motion.div>
