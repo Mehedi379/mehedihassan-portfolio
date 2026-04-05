@@ -617,10 +617,10 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // EmailJS configuration - Replace with your actual credentials
-    const serviceID = 'YOUR_SERVICE_ID'; // Get from EmailJS dashboard
-    const templateID = 'YOUR_TEMPLATE_ID'; // Get from EmailJS dashboard
-    const publicKey = 'YOUR_PUBLIC_KEY'; // Get from EmailJS dashboard
+    // EmailJS configuration
+    const serviceID = 'service_wjv3kai';
+    const templateID = 'template_26ces1h';
+    const publicKey = '_zyswTod6C45Pm8JW';
 
     emailjs
       .sendForm(serviceID, templateID, formRef.current, publicKey)
