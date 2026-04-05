@@ -8,10 +8,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#3B82F6',
-        secondary: '#8B5CF6',
-        dark: '#0F172A',
-        darker: '#020617',
+        primary: '#06b6d4',    // Cyan - Main brand color
+        secondary: '#8b5cf6',  // Purple - Secondary accent
+        accent: '#ec4899',     // Pink - Special highlights
+        dark: '#0F172A',       // Dark mode background
+        darker: '#020617',     // Darker background for depth
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
