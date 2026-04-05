@@ -111,6 +111,7 @@ export default function AutoTypingCode() {
       className="relative bg-gray-900 rounded-xl overflow-hidden border-2 border-cyan-500/50 shadow-2xl"
       style={{
         boxShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
+        minHeight: '350px',
       }}
     >
       {/* Terminal Header */}
@@ -122,8 +123,8 @@ export default function AutoTypingCode() {
       </div>
 
       {/* Code Content */}
-      <div className="p-3 sm:p-4 md:p-6 font-mono text-xs sm:text-sm md:text-base overflow-x-auto max-h-[300px] sm:max-h-[400px] md:max-h-none">
-        <pre className="text-gray-300 leading-relaxed whitespace-pre-wrap break-words">
+      <div className="p-3 sm:p-4 md:p-6 font-mono text-xs sm:text-sm md:text-base overflow-x-auto min-h-[300px] sm:min-h-[350px]">
+        <pre className="text-gray-300 leading-relaxed whitespace-pre-wrap break-words min-h-[250px] sm:min-h-[300px]">
           <code 
             dangerouslySetInnerHTML={{ 
               __html: highlightSyntax(displayedText) 
